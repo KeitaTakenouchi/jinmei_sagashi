@@ -10,9 +10,4 @@
     vertical-align: middle;
     font-size: 30px;
     padding: 0px;
-    background-image: linear-gradient(to top right,red 2%,white 2%, white 48%, red 48%, red 52%, white 52%, white 98%, red 98%); 
-}
-
-#tb td:hover {
-    background-color:orange;
 }

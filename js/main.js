@@ -3,7 +3,7 @@ var table = [];
 
 var targetCell = null;
 
-// utils
+// ---- Utility Functions ----
 function cellIdStr(x, y) {
     return "cell_" + x + "_" + y;
 }
@@ -74,7 +74,7 @@ function highlightLine(x1, y1, x2, y2) {
     } while (x < tbSize && y < tbSize); // just in case
 }
 
-// init
+// ---- Initialization ---- 
 function randomHiragana() {
     var hiraganaList = [
         "あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ",
@@ -115,7 +115,7 @@ function init() {
 }
 init()
 
-// event handlers
+// ---- Event Handlers ----
 $(".cell").on("click", function () {
     var x = dom2Cell(this)[0]
     var y = dom2Cell(this)[1]

@@ -56,7 +56,7 @@ function checkLine(x1, y1, x2, y2) {
     return null
 }
 
-function drawLine(x1, y1, x2, y2) {
+function highlightLine(x1, y1, x2, y2) {
     var dir = checkLine(x1, y1, x2, y2)
     if (!dir) return
     dx = dir[0]
@@ -146,7 +146,7 @@ $(".cell").mouseover(function () {
 
         var x = dom2Cell(this)[0]
         var y = dom2Cell(this)[1]
-        drawLine(targetCell[0], targetCell[1], x, y)
+        highlightLine(targetCell[0], targetCell[1], x, y)
     }
 })
 

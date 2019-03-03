@@ -1,7 +1,7 @@
 var tbSize = 10;
 var table = [];
 
-var targetCell = undefined;
+var targetCell = null;
 
 // utils
 function cellIdStr(x, y) {
@@ -119,8 +119,24 @@ init()
 $(".cell").on("click", function () {
     var x = dom2Cell(this)[0]
     var y = dom2Cell(this)[1]
-    targetCell = [x, y]
-    setCellColorByXY(x, y, "yellow")
+
+    if (!targetCell) {
+        // create targetCell
+        targetCell = [x, y]
+        setCellColorByXY(x, y, "yellow")
+        return
+    }
+    if (targetCell[0] == x && targetCell[1] == y) {
+        // toggle targetCell
+        setCellColorByXY(targetCell[0], targetCell[1], "white")
+        targetCell = null
+    } else {
+        // replace targetCell
+        clearTableColor()
+        setCellColorByXY(targetCell[0], targetCell[1], "white")
+        targetCell = [x, y]
+        setCellColorByXY(x, y, "yellow")
+    }
 })
 
 $(".cell").mouseover(function () {

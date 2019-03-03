@@ -140,14 +140,15 @@ $(".cell").on("click", function () {
 })
 
 $(".cell").mouseover(function () {
+    clearTableColor()
     if (targetCell) {
-        clearTableColor()
         setCellColorByXY(targetCell[0], targetCell[1], "yellow")
 
         var x = dom2Cell(this)[0]
         var y = dom2Cell(this)[1]
         highlightLine(targetCell[0], targetCell[1], x, y)
     }
+    setCellColorByDom(this, "yellow")
 })
 
 //     background-image: linear-gradient(to top right,red 2%,transparent 2%, transparent 48%, red 48%, red 52%, transparent 52%, transparent 98%, red 98%)

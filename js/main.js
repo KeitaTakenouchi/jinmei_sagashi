@@ -78,10 +78,10 @@ var vLine = "linear-gradient(  90deg, transparent 48%, red 48%, red 52%, transpa
 var rtLine = "linear-gradient( 45deg, transparent 48%, red 48%, red 52%, transparent 52%)"
 var ltLine = "linear-gradient(-45deg, transparent 48%, red 48%, red 52%, transparent 52%)"
 
-var rtCorner = "linear-gradient( 45deg, transparent 98%, green 98%)"
-var ltCorner = "linear-gradient(-45deg, transparent 98%, green 98%)"
-var rbCorner = "linear-gradient(-45deg, green 2%, transparent 2%)"
-var lbCorner = "linear-gradient( 45deg, green 2%, transparent 2%)"
+var rtCorner = "linear-gradient( 45deg, transparent 98%, red 98%)"
+var ltCorner = "linear-gradient(-45deg, transparent 98%, red 98%)"
+var rbCorner = "linear-gradient(-45deg, red 2%, transparent 2%)"
+var lbCorner = "linear-gradient( 45deg, red 2%, transparent 2%)"
 
 function drawLineInCell(x, y, dir) {
     var dx = dir[0]

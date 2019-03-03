@@ -73,22 +73,53 @@ function highlightLine(x1, y1, x2, y2) {
     } while (x < tbSize && y < tbSize); // just in case
 }
 
+var hLine = "linear-gradient(   0deg, transparent 48%, red 48%, red 52%, transparent 52%)"
+var vLine = "linear-gradient(  90deg, transparent 48%, red 48%, red 52%, transparent 52%)"
+var rtLine = "linear-gradient( 45deg, transparent 48%, red 48%, red 52%, transparent 52%)"
+var ltLine = "linear-gradient(-45deg, transparent 48%, red 48%, red 52%, transparent 52%)"
+
+var rtCorner = "linear-gradient( 45deg, transparent 98%, green 98%)"
+var ltCorner = "linear-gradient(-45deg, transparent 98%, green 98%)"
+var rbCorner = "linear-gradient(-45deg, green 2%, transparent 2%)"
+var lbCorner = "linear-gradient( 45deg, green 2%, transparent 2%)"
+
 function drawLineInCell(x, y, dir) {
     var dx = dir[0]
     var dy = dir[1]
     var prev = $("#" + cellIdStr(x, y)).css("background-image") + ","
     if (dx == 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(0deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+        $("#" + cellIdStr(x, y)).css("background-image", prev + hLine)
     } else if (dy == 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(90deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+        $("#" + cellIdStr(x, y)).css("background-image", prev + vLine)
     } else if (dx > 0 && dy > 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(45deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+        $("#" + cellIdStr(x, y)).css("background-image", prev + rtLine)
+
+        // Display corners to fill a gap bettween two lines.
+        prev = $("#" + cellIdStr(x - 1, y)).css("background-image") + ","
+        $("#" + cellIdStr(x - 1, y)).css("background-image", prev + lbCorner)
+        prev = $("#" + cellIdStr(x, y - 1)).css("background-image") + ","
+        $("#" + cellIdStr(x, y - 1)).css("background-image", prev + rtCorner)
     } else if (dx > 0 && dy < 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(-45deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+        $("#" + cellIdStr(x, y)).css("background-image", prev + ltLine)
+
+        prev = $("#" + cellIdStr(x - 1, y)).css("background-image") + ","
+        $("#" + cellIdStr(x - 1, y)).css("background-image", prev + rbCorner)
+        prev = $("#" + cellIdStr(x, y + 1)).css("background-image") + ","
+        $("#" + cellIdStr(x, y + 1)).css("background-image", prev + ltCorner)
     } else if (dx < 0 && dy > 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(-45deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+        $("#" + cellIdStr(x, y)).css("background-image", prev + ltLine)
+
+        prev = $("#" + cellIdStr(x + 1, y)).css("background-image") + ","
+        $("#" + cellIdStr(x + 1, y)).css("background-image", prev + ltCorner)
+        prev = $("#" + cellIdStr(x, y - 1)).css("background-image") + ","
+        $("#" + cellIdStr(x, y - 1)).css("background-image", prev + rbCorner)
     } else if (dx < 0 && dy < 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(45deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+        $("#" + cellIdStr(x, y)).css("background-image", prev + rtLine)
+
+        prev = $("#" + cellIdStr(x + 1, y)).css("background-image") + ","
+        $("#" + cellIdStr(x + 1, y)).css("background-image", prev + rtCorner)
+        prev = $("#" + cellIdStr(x, y + 1)).css("background-image") + ","
+        $("#" + cellIdStr(x, y + 1)).css("background-image", prev + lbCorner)
     }
 }
 

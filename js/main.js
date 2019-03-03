@@ -59,10 +59,10 @@ function checkLine(x1, y1, x2, y2) {
 function highlightLine(x1, y1, x2, y2) {
     var dir = checkLine(x1, y1, x2, y2)
     if (!dir) return
-    dx = dir[0]
-    dy = dir[1]
-    x = x1
-    y = y1
+    var dx = dir[0]
+    var dy = dir[1]
+    var x = x1
+    var y = y1
     do {
         x += dx
         y += dy
@@ -74,8 +74,8 @@ function highlightLine(x1, y1, x2, y2) {
 }
 
 function drawLineInCell(x, y, dir) {
-    dx = dir[0]
-    dy = dir[1]
+    var dx = dir[0]
+    var dy = dir[1]
     var prev = $("#" + cellIdStr(x, y)).css("background-image") + ","
     if (dx == 0) {
         $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(0deg, transparent 48%, red 48%, red 52%, transparent 52%)")
@@ -95,10 +95,10 @@ function drawLineInCell(x, y, dir) {
 function drawLine(x1, y1, x2, y2) {
     var dir = checkLine(x1, y1, x2, y2)
     if (!dir) return
-    dx = dir[0]
-    dy = dir[1]
-    x = x1
-    y = y1
+    var dx = dir[0]
+    var dy = dir[1]
+    var x = x1
+    var y = y1
     drawLineInCell(x, y, dir)
     do {
         x += dx

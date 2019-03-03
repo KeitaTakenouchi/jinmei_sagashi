@@ -23,6 +23,7 @@ function setCellColorByDom(dom, colorStr) {
     $(dom).css("background-color", colorStr)
 }
 
+
 function clearTableColor() {
     $(".cell").css("background-color", "white")
 }
@@ -61,13 +62,49 @@ function highlightLine(x1, y1, x2, y2) {
     if (!dir) return
     dx = dir[0]
     dy = dir[1]
-
     x = x1
     y = y1
     do {
         x += dx
         y += dy
         setCellColorByXY(x, y, "yellow")
+        if (x == x2 && y == y2) {
+            break
+        }
+    } while (x < tbSize && y < tbSize); // just in case
+}
+
+function drawLineInCell(x, y, dir) {
+    dx = dir[0]
+    dy = dir[1]
+    var prev = $("#" + cellIdStr(x, y)).css("background-image") + ","
+    if (dx == 0) {
+        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(0deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+    } else if (dy == 0) {
+        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(90deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+    } else if (dx > 0 && dy > 0) {
+        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(45deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+    } else if (dx > 0 && dy < 0) {
+        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(-45deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+    } else if (dx < 0 && dy > 0) {
+        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(-45deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+    } else if (dx < 0 && dy < 0) {
+        $("#" + cellIdStr(x, y)).css("background-image", prev + "linear-gradient(45deg, transparent 48%, red 48%, red 52%, transparent 52%)")
+    }
+}
+
+function drawLine(x1, y1, x2, y2) {
+    var dir = checkLine(x1, y1, x2, y2)
+    if (!dir) return
+    dx = dir[0]
+    dy = dir[1]
+    x = x1
+    y = y1
+    drawLineInCell(x, y, dir)
+    do {
+        x += dx
+        y += dy
+        drawLineInCell(x, y, dir)
         if (x == x2 && y == y2) {
             break
         }
@@ -126,6 +163,7 @@ $(".cell").on("click", function () {
         setCellColorByXY(x, y, "yellow")
         return
     }
+    drawLine(targetCell[0], targetCell[1], x, y)
     if (targetCell[0] == x && targetCell[1] == y) {
         // toggle targetCell
         setCellColorByXY(targetCell[0], targetCell[1], "white")
@@ -150,5 +188,3 @@ $(".cell").mouseover(function () {
         highlightLine(targetCell[0], targetCell[1], x, y)
     }
 })
-
-//     background-image: linear-gradient(to top right,red 2%,transparent 2%, transparent 48%, red 48%, red 52%, transparent 52%, transparent 98%, red 98%)

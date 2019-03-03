@@ -23,7 +23,6 @@ function setCellColorByDom(dom, colorStr) {
     $(dom).css("background-color", colorStr)
 }
 
-
 function clearTableColor() {
     $(".cell").css("background-color", "white")
 }

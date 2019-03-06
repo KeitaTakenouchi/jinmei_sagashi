@@ -148,6 +148,36 @@ function drawLine(x1, y1, x2, y2) {
     } while (x < tbSize && y < tbSize); // just in case
 }
 
+function checkName(x1, y1, x2, y2) {
+    if (!checkLine(x1, y1, x2, y2)) return false
+
+    var dx = x2 - x1
+    var dy = y2 - y1
+
+    var len = Math.max(Math.abs(dx), Math.abs(dy))
+    var ex = dx / len
+    var ey = dy / len
+
+    // read the sentence
+    var str1 = ""
+    var str2 = ""
+    for (var i = 0; i <= len; i++) {
+        var x = x1 + i * ex
+        var y = y1 + i * ey
+        str1 = str1 + table[x][y]
+        str2 = table[x][y] + str2
+    }
+
+    // check if the sentence is contained in the target list
+    for (var i = 0; i < targetList.length; i++) {
+        var name = targetList[i].name;
+        if (name == str1 || name == str2) {
+            return true
+        }
+    }
+    return false
+}
+
 // ---- Initialization ---- 
 var hiraganaList = [
     "あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ",
@@ -296,11 +326,16 @@ $(".cell").on("click", function () {
         // toggle targetCell
         setCellColorByXY(markedCell[0], markedCell[1], "transparent")
         markedCell = null
-    } else {
+        return
+    }
+    if (checkName(markedCell[0], markedCell[1], x, y)) {
+        // if valid name
         drawLine(markedCell[0], markedCell[1], x, y)
+        markedCell = null
+        clearTableColor()
+    } else {
         // replace targetCell
         clearTableColor()
-        setCellColorByXY(markedCell[0], markedCell[1], "transparent")
         markedCell = [x, y]
         setCellColorByXY(x, y, "yellow")
     }

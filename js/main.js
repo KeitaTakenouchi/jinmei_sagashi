@@ -3,6 +3,7 @@ var table = [];
 
 var targetCell = null;
 var targetList = []
+var char2XY = {}
 
 // ---- Utility Functions ----
 function cellIdStr(x, y) {
@@ -191,7 +192,7 @@ function randomDir(excludedDir) {
 }
 
 function locateName(name, nth, x, y, dir) {
-    if (nth >= name.length) return
+    if (nth >= name.length) return false
 
     var dx = dir[0]
     var dy = dir[1]
@@ -203,14 +204,14 @@ function locateName(name, nth, x, y, dir) {
     var endy = starty + (name.length - 1) * dy
 
     // check the range
-    if (!isInTable(startx, starty) || !isInTable(endx, endy)) return
+    if (!isInTable(startx, starty) || !isInTable(endx, endy)) return false
 
     // check in advance
     for (var i = 0; i < name.length; i++) {
         var curx = startx + i * dx
         var cury = starty + i * dy
         if (table[curx][cury] && table[curx][cury] != name[i])
-            return
+            return false
     }
 
     // fill a name in the table
@@ -218,11 +219,36 @@ function locateName(name, nth, x, y, dir) {
         var curx = startx + i * dx
         var cury = starty + i * dy
         table[curx][cury] = name[i]
+        char2XY[name[i]] = [curx, cury]
     }
+    return true
 }
 
-function locateNames(targetNum) {
-    // TODO: implement here
+function locateNames() {
+    for (var i = 0; i < targetList.length; i++) {
+        target:
+        while (true) {
+            var name = targetList[i].name
+            var nth = Math.round(Math.random() * (targetList.length - 1))
+
+            var tx = Math.round(Math.random() * (tbSize - 1))
+            var ty = Math.round(Math.random() * (tbSize - 1))
+            var dirTrial = 1
+
+            if (char2XY[name[nth]]) {
+                var p = char2XY[name[nth]]
+                tx = p[0]
+                ty = p[1]
+                dirTrial = 40
+            }
+
+            for (var cnt = 0; cnt < dirTrial; cnt++) {
+                var dir = randomDir()
+                var done = locateName(name, nth, tx, ty, dir)
+                if (done) break target
+            }
+        }
+    }
 }
 
 function fillRandomly() {
@@ -255,7 +281,7 @@ function init() {
     var targetNum = 10
     createTable()
     chooseTargets(targetNum)
-    locateNames(targetNum)
+    locateNames()
     fillRandomly()
     showTable()
 }

@@ -26,7 +26,7 @@ function setCellColorByDom(dom, colorStr) {
 }
 
 function clearTableColor() {
-    $(".cell").css("background-color", "white")
+    $(".cell").css("background-color", "transparent")
 }
 
 function isInTable(x, y) {
@@ -294,12 +294,12 @@ $(".cell").on("click", function () {
     drawLine(targetCell[0], targetCell[1], x, y)
     if (targetCell[0] == x && targetCell[1] == y) {
         // toggle targetCell
-        setCellColorByXY(targetCell[0], targetCell[1], "white")
+        setCellColorByXY(targetCell[0], targetCell[1], "transparent")
         targetCell = null
     } else {
         // replace targetCell
         clearTableColor()
-        setCellColorByXY(targetCell[0], targetCell[1], "white")
+        setCellColorByXY(targetCell[0], targetCell[1], "transparent")
         targetCell = [x, y]
         setCellColorByXY(x, y, "yellow")
     }

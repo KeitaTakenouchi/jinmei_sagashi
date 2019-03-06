@@ -1,4 +1,4 @@
-var tbSize = 20
+var tbSize = 15
 var table = [];
 
 var targetCell = null;
@@ -177,16 +177,8 @@ function chooseTargets(targetNum) {
     }
 }
 
-function randomDir(excludedDir) {
+function randomDir() {
     var dirs = [[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, -1], [-1, 1]]
-    if (excludedDir) {
-        for (var i = 0; i < dirs.length; i++) {
-            if (dirs[i][0] == excludedDir[0] && dirs[i][1] == excludedDir[1]) {
-                dirs.splice(i, 1)
-                break
-            }
-        }
-    }
     var index = Math.round(Math.random() * (dirs.length - 1))
     return dirs[index]
 }

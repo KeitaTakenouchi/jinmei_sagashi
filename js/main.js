@@ -352,3 +352,7 @@ $(".cell").mouseover(function () {
         highlightLine(markedCell[0], markedCell[1], x, y)
     }
 })
+
+$(".cell").mouseleave(function () {
+    clearTableColor()
+})

@@ -79,15 +79,16 @@ function highlightLine(x1, y1, x2, y2) {
     } while (x < tbSize && y < tbSize); // just in case
 }
 
-var hLine = "linear-gradient(   0deg, transparent 48%, red 48%, red 52%, transparent 52%)"
-var vLine = "linear-gradient(  90deg, transparent 48%, red 48%, red 52%, transparent 52%)"
-var rtLine = "linear-gradient( 45deg, transparent 48%, red 48%, red 52%, transparent 52%)"
-var ltLine = "linear-gradient(-45deg, transparent 48%, red 48%, red 52%, transparent 52%)"
+var width = 2;
+var hLine = "linear-gradient(   0deg, transparent " + (50 - width) + "%, red " + (50 - width) + "%, red " + (50 + width) + "%, transparent " + (50 + width) + "%)"
+var vLine = "linear-gradient(  90deg, transparent " + (50 - width) + "%, red " + (50 - width) + "%, red " + (50 + width) + "%, transparent " + (50 + width) + "%)"
+var rtLine = "linear-gradient(  45deg, transparent " + (50 - width) + "%, red " + (50 - width) + "%, red " + (50 + width) + "%, transparent " + (50 + width) + "%)"
+var ltLine = "linear-gradient( -45deg, transparent " + (50 - width) + "%, red " + (50 - width) + "%, red " + (50 + width) + "%, transparent " + (50 + width) + "%)"
 
-var rtCorner = "linear-gradient( 45deg, transparent 98%, red 98%)"
-var ltCorner = "linear-gradient(-45deg, transparent 98%, red 98%)"
-var rbCorner = "linear-gradient(-45deg, red 2%, transparent 2%)"
-var lbCorner = "linear-gradient( 45deg, red 2%, transparent 2%)"
+var rtCorner = "linear-gradient( 45deg, transparent " + (100 - width) + "%, red " + (100 - width) + "%)"
+var ltCorner = "linear-gradient(-45deg, transparent " + (100 - width) + "%, red " + (100 - width) + "%)"
+var rbCorner = "linear-gradient(-45deg, red " + (width) + "%, transparent " + (width) + "%)"
+var lbCorner = "linear-gradient( 45deg, red " + (width) + "%, transparent " + (width) + "%)"
 
 function drawLineInCell(x, y, dir) {
     var dx = dir[0]

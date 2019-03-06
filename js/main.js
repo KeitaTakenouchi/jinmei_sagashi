@@ -1,7 +1,7 @@
 var tbSize = 15
 var table = [];
 
-var targetCell = null;
+var markedCell = null;
 var targetList = []
 var char2XY = {}
 
@@ -286,22 +286,22 @@ $(".cell").on("click", function () {
     var x = dom2Cell(this)[0]
     var y = dom2Cell(this)[1]
 
-    if (!targetCell) {
+    if (!markedCell) {
         // create targetCell
-        targetCell = [x, y]
+        markedCell = [x, y]
         setCellColorByXY(x, y, "yellow")
         return
     }
-    drawLine(targetCell[0], targetCell[1], x, y)
-    if (targetCell[0] == x && targetCell[1] == y) {
+    if (markedCell[0] == x && markedCell[1] == y) {
         // toggle targetCell
-        setCellColorByXY(targetCell[0], targetCell[1], "transparent")
-        targetCell = null
+        setCellColorByXY(markedCell[0], markedCell[1], "transparent")
+        markedCell = null
     } else {
+        drawLine(markedCell[0], markedCell[1], x, y)
         // replace targetCell
         clearTableColor()
-        setCellColorByXY(targetCell[0], targetCell[1], "transparent")
-        targetCell = [x, y]
+        setCellColorByXY(markedCell[0], markedCell[1], "transparent")
+        markedCell = [x, y]
         setCellColorByXY(x, y, "yellow")
     }
 })
@@ -309,11 +309,11 @@ $(".cell").on("click", function () {
 $(".cell").mouseover(function () {
     clearTableColor()
     setCellColorByDom(this, "yellow")
-    if (targetCell) {
-        setCellColorByXY(targetCell[0], targetCell[1], "yellow")
+    if (markedCell) {
+        setCellColorByXY(markedCell[0], markedCell[1], "yellow")
 
         var x = dom2Cell(this)[0]
         var y = dom2Cell(this)[1]
-        highlightLine(targetCell[0], targetCell[1], x, y)
+        highlightLine(markedCell[0], markedCell[1], x, y)
     }
 })

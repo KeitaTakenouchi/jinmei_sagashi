@@ -1,7 +1,8 @@
-var tbSize = 10;
+var tbSize = 20
 var table = [];
 
 var targetCell = null;
+var targetList = []
 
 // ---- Utility Functions ----
 function cellIdStr(x, y) {
@@ -25,6 +26,10 @@ function setCellColorByDom(dom, colorStr) {
 
 function clearTableColor() {
     $(".cell").css("background-color", "white")
+}
+
+function isInTable(x, y) {
+    return 0 <= x && x < tbSize && 0 <= y && y < tbSize
 }
 
 function checkLine(x1, y1, x2, y2) {
@@ -157,9 +162,78 @@ function createTable() {
     for (var i = 0; i < tbSize; i++) {
         var row = []
         for (var j = 0; j < tbSize; j++) {
-            row.push(randomHiragana())
+            row.push(null)
         }
         table.push(row)
+    }
+}
+
+function randomDir(excludedDir) {
+    var dirs = [[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, -1], [-1, 1]]
+    if (excludedDir) {
+        for (var i = 0; i < dirs.length; i++) {
+            if (dirs[i][0] == excludedDir[0] && dirs[i][1] == excludedDir[1]) {
+                dirs.splice(i, 1)
+                break
+            }
+        }
+    }
+    var index = Math.round(Math.random() * (dirs.length - 1))
+    return dirs[index]
+}
+
+function chooseTargets(targetNum) {
+    for (let i = 0; i < targetNum && jinmei.length > 0; i++) {
+        var index = Math.round(Math.random() * (jinmei.length - 1))
+        var target = jinmei.splice(index, 1)
+        targetList.push(target[0])
+    }
+}
+
+function locateName(name, nth, x, y, dir) {
+    if (nth >= name.length) return
+
+    var dx = dir[0]
+    var dy = dir[1]
+
+    var startx = x - nth * dx
+    var starty = y - nth * dy
+
+    var endx = startx + (name.length - 1) * dx
+    var endy = starty + (name.length - 1) * dy
+
+    // check the range
+    if (!isInTable(startx, starty) || !isInTable(endx, endy)) return
+
+    // check in advance
+    for (var i = 0; i < name.length; i++) {
+        var curx = startx + i * dx
+        var cury = starty + i * dy
+        if (table[curx][cury] && table[curx][cury] != name[i])
+            return
+    }
+
+    // fill a name in the table
+    for (var i = 0; i < name.length; i++) {
+        var curx = startx + i * dx
+        var cury = starty + i * dy
+        table[curx][cury] = name[i]
+    }
+}
+
+function locateNames(targetNum) {
+    // TODO: implement here
+}
+
+function fillRandomly() {
+    for (var i = 0; i < tbSize; i++) {
+        for (var j = 0; j < tbSize; j++) {
+            if (!table[i][j]) {
+                //table[i][j] = randomHiragana()
+                table[i][j] = "."
+                // TODO: Check no new jinmei is created.
+            }
+        }
     }
 }
 
@@ -178,7 +252,11 @@ function showTable() {
 }
 
 function init() {
+    var targetNum = 10
     createTable()
+    chooseTargets(targetNum)
+    locateNames(targetNum)
+    fillRandomly()
     showTable()
 }
 init()

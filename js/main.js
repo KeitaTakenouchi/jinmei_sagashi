@@ -168,6 +168,14 @@ function createTable() {
     }
 }
 
+function chooseTargets(targetNum) {
+    for (let i = 0; i < targetNum && jinmei.length > 0; i++) {
+        var index = Math.round(Math.random() * (jinmei.length - 1))
+        var target = jinmei.splice(index, 1)
+        targetList.push(target[0])
+    }
+}
+
 function randomDir(excludedDir) {
     var dirs = [[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, -1], [-1, 1]]
     if (excludedDir) {
@@ -180,14 +188,6 @@ function randomDir(excludedDir) {
     }
     var index = Math.round(Math.random() * (dirs.length - 1))
     return dirs[index]
-}
-
-function chooseTargets(targetNum) {
-    for (let i = 0; i < targetNum && jinmei.length > 0; i++) {
-        var index = Math.round(Math.random() * (jinmei.length - 1))
-        var target = jinmei.splice(index, 1)
-        targetList.push(target[0])
-    }
 }
 
 function locateName(name, nth, x, y, dir) {

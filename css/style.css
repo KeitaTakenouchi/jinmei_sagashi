@@ -26,7 +26,7 @@
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-#table_div{
+#header_end{
     clear: both;
 }
 
@@ -53,11 +53,11 @@
     font-size: 40px;
     text-align: center;
     background-color: beige;
-    visibility: hidden;
+    display: none;
 }
 
 #popup.active{
-    visibility: visible;
+    display: block;
 }
 
 button{

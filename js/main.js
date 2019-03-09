@@ -1,20 +1,20 @@
 var tbSize = 15
-var lineWidth = 3;
+var lineWidth = 3
 
-var table = [];
+var table = []
 var char2XY = {}
 
-var markedCell = null;
+var markedCell = null
 var targetList = []
 var foundTargetList = []
 
 // ---- Utility Functions ----
 function cellIdStr(x, y) {
-    return "cell_" + x + "_" + y;
+    return "cell_" + x + "_" + y
 }
 
 function dom2Cell(dom) {
-    var cellStr = $(dom).attr("id");
+    var cellStr = $(dom).attr("id")
     var x = parseInt(cellStr.split("_")[1])
     var y = parseInt(cellStr.split("_")[2])
     return [x, y]
@@ -79,7 +79,7 @@ function highlightLine(x1, y1, x2, y2) {
         if (x == x2 && y == y2) {
             break
         }
-    } while (x < tbSize && y < tbSize); // just in case
+    } while (x < tbSize && y < tbSize) // just in case
 }
 
 function lineCss(degree, width) {
@@ -164,7 +164,7 @@ function drawLine(color, x1, y1, x2, y2) {
         if (x == x2 && y == y2) {
             break
         }
-    } while (x < tbSize && y < tbSize); // just in case
+    } while (x < tbSize && y < tbSize) // just in case
 }
 
 function checkName(x1, y1, x2, y2) {
@@ -184,7 +184,7 @@ function checkName(x1, y1, x2, y2) {
 
 function showAnswerLines() {
     for (var i = 0; i < targetList.length; i++) {
-        const t = targetList[i];
+        var t = targetList[i]
         if (foundTargetList.indexOf(t) < 0) {
             drawLine("green", t.start[0], t.start[1], t.end[0], t.end[1])
         }
@@ -215,7 +215,7 @@ function createTable() {
 }
 
 function chooseTargets(targetNum) {
-    for (let i = 0; i < targetNum && jinmei.length > 0; i++) {
+    for (var i = 0; i < targetNum && jinmei.length > 0; i++) {
         var index = Math.round(Math.random() * (jinmei.length - 1))
         var target = jinmei.splice(index, 1)
         targetList.push(target[0])

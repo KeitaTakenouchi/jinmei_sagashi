@@ -9,6 +9,7 @@ var char2XY = {}
 var markedCell = null
 var targetList = []
 var foundTargetList = []
+var isCountDown = true
 
 // ---- Utility Functions ----
 function cellIdStr(x, y) {
@@ -193,6 +194,18 @@ function showAnswerLines() {
     }
 }
 
+function showPopup() {
+    isCountDown = false
+    $("#table_div").addClass("inActive")
+    $("#popup").addClass("active")
+}
+
+function closePopup() {
+    isCountDown = true
+    $("#table_div").removeClass("inActive")
+    $("#popup").removeClass("active")
+}
+
 // ---- Initialization ---- 
 var hiraganaList = [
     "あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ",
@@ -337,7 +350,6 @@ function showTable() {
     $("#tb").append(tbHtml)
 }
 
-var isCountDwon = true
 var interval
 
 function timeOver() {
@@ -349,7 +361,7 @@ function resetTimer() {
     var remainingTime = timeoutSeconds
     $("#timer").text(remainingTime)
     var decTime = function () {
-        if (isCountDwon) {
+        if (isCountDown) {
             remainingTime--
             $("#timer").text(remainingTime)
             if (remainingTime <= 0) {
@@ -399,6 +411,7 @@ $(".cell").on("click", function () {
         showRemaining()
         markedCell = null
         clearTableColor()
+        showPopup()
     } else {
         // replace targetCell
         clearTableColor()
@@ -421,4 +434,8 @@ $(".cell").mouseover(function () {
 
 $(".cell").mouseleave(function () {
     clearTableColor()
+})
+
+$("#close_popup_btn").on("click", function () {
+    closePopup()
 })

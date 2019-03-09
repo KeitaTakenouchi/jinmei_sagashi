@@ -4,6 +4,10 @@
     margin-right: auto;
 }
 
+#table_div.inActive{
+    visibility: collapse;
+}
+
 #tb {
     border-collapse: collapse;
     border: 1px solid black;
@@ -42,4 +46,16 @@
 
 #timer {
     font-size: 60px;
+}
+
+#popup{
+    height: 600px;
+    font-size: 40px;
+    text-align: center;
+    background-color: beige;
+    visibility: hidden;
+}
+
+#popup.active{
+    visibility: visible;
 }

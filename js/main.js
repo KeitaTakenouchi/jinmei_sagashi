@@ -206,7 +206,8 @@ function randomHiragana() {
     return hiraganaList[index]
 }
 
-function createTable() {
+function initTable() {
+    table = []
     for (var i = 0; i < tbSize; i++) {
         var row = []
         for (var j = 0; j < tbSize; j++) {
@@ -317,6 +318,7 @@ function showTable() {
         }
         tbHtml += "</tr>"
     }
+    $("#tb").empty()
     $("#tb").append(tbHtml)
 }
 
@@ -344,7 +346,7 @@ function resetTimer() {
 }
 
 function init() {
-    createTable()
+    initTable()
     chooseTargets()
     locateNames()
     fillRandomly()

@@ -319,12 +319,38 @@ function showTable() {
     $("#tb").append(tbHtml)
 }
 
+var remainingTime
+var isCountDwon = true
+var interval
+
+function timeOver() {
+    showAnswerLines()
+    clearInterval(interval)
+}
+
+function resetTimer() {
+    remainingTime = 3
+    $("#timer").text(remainingTime)
+    var decTime = function () {
+        if (isCountDwon) {
+            remainingTime--
+            $("#timer").text(remainingTime)
+            if (remainingTime <= 0) {
+                timeOver()
+            }
+        }
+    }
+    interval = setInterval(decTime, 1000)
+}
+
 function init() {
     createTable()
     chooseTargets()
     locateNames()
     fillRandomly()
     showTable()
+
+    resetTimer()
 }
 init()
 

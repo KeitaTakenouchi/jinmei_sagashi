@@ -11,3 +11,8 @@
     font-size: 30px;
     padding: 0px;
 }
+
+#timer {
+    font-size: 60px;
+    font-family: 'Courier New', Courier, monospace;
+}

@@ -178,6 +178,15 @@ function checkName(x1, y1, x2, y2) {
     return false
 }
 
+function showAnswerLines() {
+    for (var i = 0; i < targetList.length; i++) {
+        const t = targetList[i];
+        if (foundTargetList.indexOf(t) < 0) {
+            drawLine(t.start[0], t.start[1], t.end[0], t.end[1])
+        }
+    }
+}
+
 // ---- Initialization ---- 
 var hiraganaList = [
     "あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ",

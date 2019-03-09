@@ -1,3 +1,9 @@
+#game_div {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #tb {
     border-collapse: collapse;
     border: 1px solid black;
@@ -12,7 +18,28 @@
     padding: 0px;
 }
 
+#header_div{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#table_div{
+    clear: both;
+}
+
+#remaining_area{
+    float: left;
+    font-size: 20px;
+}
+
+#remaining{
+    font-size: 60px;
+}
+
+#timer_area {
+    font-size: 30px;
+    float: right;
+}
+
 #timer {
     font-size: 60px;
-    font-family: 'Courier New', Courier, monospace;
 }

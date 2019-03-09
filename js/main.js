@@ -360,6 +360,11 @@ function resetTimer() {
     interval = setInterval(decTime, 1000)
 }
 
+function showRemaining() {
+    var text = targetList.length - foundTargetList.length
+    $("#remaining").text(text)
+}
+
 function init() {
     chooseTargets()
     locateNames()
@@ -367,6 +372,7 @@ function init() {
     showTable()
 
     resetTimer()
+    showRemaining()
 }
 init()
 
@@ -390,6 +396,7 @@ $(".cell").on("click", function () {
     if (checkName(markedCell[0], markedCell[1], x, y)) {
         // if valid name
         drawLine("red", markedCell[0], markedCell[1], x, y)
+        showRemaining()
         markedCell = null
         clearTableColor()
     } else {

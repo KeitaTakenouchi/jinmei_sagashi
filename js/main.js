@@ -1,5 +1,6 @@
 var tbSize = 15
 var lineWidth = 3
+var targetNum = 10
 
 var table = []
 var char2XY = {}
@@ -214,7 +215,7 @@ function createTable() {
     }
 }
 
-function chooseTargets(targetNum) {
+function chooseTargets() {
     for (var i = 0; i < targetNum && jinmei.length > 0; i++) {
         var index = Math.round(Math.random() * (jinmei.length - 1))
         var target = jinmei.splice(index, 1)
@@ -319,9 +320,8 @@ function showTable() {
 }
 
 function init() {
-    var targetNum = 10
     createTable()
-    chooseTargets(targetNum)
+    chooseTargets()
     locateNames()
     fillRandomly()
     showTable()

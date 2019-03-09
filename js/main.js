@@ -1,5 +1,5 @@
-var tbSize = 15
-var lineWidth = 3
+var tbSize = 12
+var lineWidth = 2
 var targetNum = 10
 var timeoutSeconds = 100
 

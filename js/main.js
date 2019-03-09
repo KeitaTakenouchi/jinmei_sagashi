@@ -165,27 +165,13 @@ function drawLine(x1, y1, x2, y2) {
 function checkName(x1, y1, x2, y2) {
     if (!checkLine(x1, y1, x2, y2)) return false
 
-    var dx = x2 - x1
-    var dy = y2 - y1
-
-    var len = Math.max(Math.abs(dx), Math.abs(dy))
-    var ex = dx / len
-    var ey = dy / len
-
-    // read the sentence
-    var str1 = ""
-    var str2 = ""
-    for (var i = 0; i <= len; i++) {
-        var x = x1 + i * ex
-        var y = y1 + i * ey
-        str1 = str1 + table[x][y]
-        str2 = table[x][y] + str2
-    }
-
-    // check if the sentence is contained in the target list
     for (var i = 0; i < targetList.length; i++) {
-        var name = targetList[i].name;
-        if (name == str1 || name == str2) {
+        var ts = targetList[i].start
+        var te = targetList[i].end
+        if (ts[0] == x1 && ts[1] == y1 && te[0] == x2 && te[1] == y2) {
+            return true
+        }
+        if (ts[0] == x2 && ts[1] == y2 && te[0] == x1 && te[1] == y1) {
             return true
         }
     }
@@ -230,7 +216,7 @@ function randomDir() {
 }
 
 function locateName(name, nth, x, y, dir) {
-    if (nth >= name.length) return false
+    if (nth >= name.length) return null
 
     var dx = dir[0]
     var dy = dir[1]
@@ -242,14 +228,14 @@ function locateName(name, nth, x, y, dir) {
     var endy = starty + (name.length - 1) * dy
 
     // check the range
-    if (!isInTable(startx, starty) || !isInTable(endx, endy)) return false
+    if (!isInTable(startx, starty) || !isInTable(endx, endy)) return null
 
     // check in advance
     for (var i = 0; i < name.length; i++) {
         var curx = startx + i * dx
         var cury = starty + i * dy
         if (table[curx][cury] && table[curx][cury] != name[i])
-            return false
+            return null
     }
 
     // fill a name in the table
@@ -259,7 +245,7 @@ function locateName(name, nth, x, y, dir) {
         table[curx][cury] = name[i]
         char2XY[name[i]] = [curx, cury]
     }
-    return true
+    return [[startx, starty], [endx, endy]]
 }
 
 function locateNames() {
@@ -282,8 +268,12 @@ function locateNames() {
 
             for (var cnt = 0; cnt < dirTrial; cnt++) {
                 var dir = randomDir()
-                var done = locateName(name, nth, tx, ty, dir)
-                if (done) break target
+                var result = locateName(name, nth, tx, ty, dir)
+                if (result) {
+                    targetList[i].start = result[0]
+                    targetList[i].end = result[1]
+                    break target
+                }
             }
         }
     }

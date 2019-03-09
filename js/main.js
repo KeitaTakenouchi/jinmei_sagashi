@@ -171,7 +171,7 @@ function drawLine(color, x1, y1, x2, y2) {
 }
 
 function checkName(x1, y1, x2, y2) {
-    if (!checkLine(x1, y1, x2, y2)) return false
+    if (!checkLine(x1, y1, x2, y2)) return null
 
     for (var i = 0; i < targetList.length; i++) {
         var ts = targetList[i].start
@@ -179,10 +179,10 @@ function checkName(x1, y1, x2, y2) {
         if (ts[0] == x1 && ts[1] == y1 && te[0] == x2 && te[1] == y2 ||
             ts[0] == x2 && ts[1] == y2 && te[0] == x1 && te[1] == y1) {
             foundTargetList.push(targetList[i])
-            return true
+            return targetList[i]
         }
     }
-    return false
+    return null
 }
 
 function showAnswerLines() {
@@ -194,10 +194,11 @@ function showAnswerLines() {
     }
 }
 
-function showPopup() {
+function showPopup(foundInfo) {
     isCountDown = false
     $("#table_div").addClass("inActive")
     $("#popup").addClass("active")
+    $("#message").html(foundInfo.display_name + "さんは<br>" + foundInfo.message + "<br>生まれです")
 }
 
 function closePopup() {
@@ -405,13 +406,14 @@ $(".cell").on("click", function () {
         markedCell = null
         return
     }
-    if (checkName(markedCell[0], markedCell[1], x, y)) {
+    var foundInfo = checkName(markedCell[0], markedCell[1], x, y)
+    if (foundInfo) {
         // if valid name
         drawLine("red", markedCell[0], markedCell[1], x, y)
         showRemaining()
         markedCell = null
         clearTableColor()
-        showPopup()
+        showPopup(foundInfo)
     } else {
         // replace targetCell
         clearTableColor()

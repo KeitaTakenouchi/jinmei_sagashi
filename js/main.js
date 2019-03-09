@@ -265,31 +265,46 @@ function locateName(name, nth, x, y, dir) {
 }
 
 function locateNames() {
-    for (var i = 0; i < targetList.length; i++) {
-        target:
-        while (true) {
+    var nameTrialLim = 100
+    var dirTrialLim = 10
+    while (true) {
+        initTable()
+        targets:
+        for (var i = 0; i < targetList.length; i++) {
             var name = targetList[i].name
-            var nth = Math.round(Math.random() * (targetList.length - 1))
+            target:
+            for (var j = 0; j < nameTrialLim; j++) {
+                var nth = Math.round(Math.random() * (targetList.length - 1))
 
-            var tx = Math.round(Math.random() * (tbSize - 1))
-            var ty = Math.round(Math.random() * (tbSize - 1))
-            var dirTrial = 1
-
-            if (char2XY[name[nth]]) {
-                var p = char2XY[name[nth]]
-                tx = p[0]
-                ty = p[1]
-                dirTrial = 40
-            }
-
-            for (var cnt = 0; cnt < dirTrial; cnt++) {
-                var dir = randomDir()
-                var result = locateName(name, nth, tx, ty, dir)
-                if (result) {
-                    targetList[i].start = result[0]
-                    targetList[i].end = result[1]
-                    break target
+                var tx, ty, dirTrial
+                if (char2XY[name[nth]]) {
+                    var p = char2XY[name[nth]]
+                    tx = p[0]
+                    ty = p[1]
+                    dirTrial = dirTrialLim
+                } else {
+                    tx = Math.round(Math.random() * (tbSize - 1))
+                    ty = Math.round(Math.random() * (tbSize - 1))
+                    dirTrial = 1
                 }
+
+                for (var dirTrialCnt = 0; dirTrialCnt < dirTrial; dirTrialCnt++) {
+                    var dir = randomDir()
+                    var result = locateName(name, nth, tx, ty, dir)
+                    if (result) {
+                        targetList[i].start = result[0]
+                        targetList[i].end = result[1]
+                        break target
+                    }
+                }
+
+                // reset from the beginning if the name can't be embedded.
+                if (j == nameTrialLim - 1) {
+                    break targets
+                }
+            }
+            if (i == targetList.length - 1) {
+                return // success
             }
         }
     }
@@ -346,7 +361,6 @@ function resetTimer() {
 }
 
 function init() {
-    initTable()
     chooseTargets()
     locateNames()
     fillRandomly()

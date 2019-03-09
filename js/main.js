@@ -82,17 +82,21 @@ function highlightLine(x1, y1, x2, y2) {
 
 var lw = 3;
 function lineCss(degree) {
-    return "linear-gradient(" + degree + "deg, "
-        + "transparent " + (50 - lw) + "%,"
-        + "red " + (50 - lw) + "%,"
-        + "red " + (50 + lw) + "%,"
-        + "transparent " + (50 + lw) + "%)"
+    return function (color) {
+        return "linear-gradient(" + degree + "deg, "
+            + "transparent " + (50 - lw) + "%,"
+            + color + " " + (50 - lw) + "%,"
+            + color + " " + (50 + lw) + "%,"
+            + "transparent " + (50 + lw) + "%)"
+    }
 }
 
 function cornerCss(degree) {
-    return "linear-gradient(" + degree + "deg, "
-        + "red " + lw + "%,"
-        + "transparent " + lw + "%) "
+    return function (color) {
+        return "linear-gradient(" + degree + "deg, "
+            + color + " " + lw + "%,"
+            + "transparent " + lw + "%) "
+    }
 }
 
 var hLine = lineCss(0)
@@ -105,58 +109,58 @@ var ltCorner = cornerCss(135)
 var rbCorner = cornerCss(-45)
 var lbCorner = cornerCss(45)
 
-function drawLineInCell(x, y, dir) {
+function drawLineInCell(color, x, y, dir) {
     var dx = dir[0]
     var dy = dir[1]
     var prev = $("#" + cellIdStr(x, y)).css("background-image") + ","
     if (dx == 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + hLine)
+        $("#" + cellIdStr(x, y)).css("background-image", prev + hLine(color))
     } else if (dy == 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + vLine)
+        $("#" + cellIdStr(x, y)).css("background-image", prev + vLine(color))
     } else if (dx > 0 && dy > 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + rtLine)
+        $("#" + cellIdStr(x, y)).css("background-image", prev + rtLine(color))
 
         // Display corners to fill a gap bettween two lines.
         prev = $("#" + cellIdStr(x - 1, y)).css("background-image") + ","
-        $("#" + cellIdStr(x - 1, y)).css("background-image", prev + lbCorner)
+        $("#" + cellIdStr(x - 1, y)).css("background-image", prev + lbCorner(color))
         prev = $("#" + cellIdStr(x, y - 1)).css("background-image") + ","
-        $("#" + cellIdStr(x, y - 1)).css("background-image", prev + rtCorner)
+        $("#" + cellIdStr(x, y - 1)).css("background-image", prev + rtCorner(color))
     } else if (dx > 0 && dy < 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + ltLine)
+        $("#" + cellIdStr(x, y)).css("background-image", prev + ltLine(color))
 
         prev = $("#" + cellIdStr(x - 1, y)).css("background-image") + ","
-        $("#" + cellIdStr(x - 1, y)).css("background-image", prev + rbCorner)
+        $("#" + cellIdStr(x - 1, y)).css("background-image", prev + rbCorner(color))
         prev = $("#" + cellIdStr(x, y + 1)).css("background-image") + ","
-        $("#" + cellIdStr(x, y + 1)).css("background-image", prev + ltCorner)
+        $("#" + cellIdStr(x, y + 1)).css("background-image", prev + ltCorner(color))
     } else if (dx < 0 && dy > 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + ltLine)
+        $("#" + cellIdStr(x, y)).css("background-image", prev + ltLine(color))
 
         prev = $("#" + cellIdStr(x + 1, y)).css("background-image") + ","
-        $("#" + cellIdStr(x + 1, y)).css("background-image", prev + ltCorner)
+        $("#" + cellIdStr(x + 1, y)).css("background-image", prev + ltCorner(color))
         prev = $("#" + cellIdStr(x, y - 1)).css("background-image") + ","
-        $("#" + cellIdStr(x, y - 1)).css("background-image", prev + rbCorner)
+        $("#" + cellIdStr(x, y - 1)).css("background-image", prev + rbCorner(color))
     } else if (dx < 0 && dy < 0) {
-        $("#" + cellIdStr(x, y)).css("background-image", prev + rtLine)
+        $("#" + cellIdStr(x, y)).css("background-image", prev + rtLine(color))
 
         prev = $("#" + cellIdStr(x + 1, y)).css("background-image") + ","
-        $("#" + cellIdStr(x + 1, y)).css("background-image", prev + rtCorner)
+        $("#" + cellIdStr(x + 1, y)).css("background-image", prev + rtCorner(color))
         prev = $("#" + cellIdStr(x, y + 1)).css("background-image") + ","
-        $("#" + cellIdStr(x, y + 1)).css("background-image", prev + lbCorner)
+        $("#" + cellIdStr(x, y + 1)).css("background-image", prev + lbCorner(color))
     }
 }
 
-function drawLine(x1, y1, x2, y2) {
+function drawLine(color, x1, y1, x2, y2) {
     var dir = checkLine(x1, y1, x2, y2)
     if (!dir) return
     var dx = dir[0]
     var dy = dir[1]
     var x = x1
     var y = y1
-    drawLineInCell(x, y, dir)
+    drawLineInCell(color, x, y, dir)
     do {
         x += dx
         y += dy
-        drawLineInCell(x, y, dir)
+        drawLineInCell(color, x, y, dir)
         if (x == x2 && y == y2) {
             break
         }
@@ -182,7 +186,7 @@ function showAnswerLines() {
     for (var i = 0; i < targetList.length; i++) {
         const t = targetList[i];
         if (foundTargetList.indexOf(t) < 0) {
-            drawLine(t.start[0], t.start[1], t.end[0], t.end[1])
+            drawLine("green", t.start[0], t.start[1], t.end[0], t.end[1])
         }
     }
 }
@@ -343,7 +347,7 @@ $(".cell").on("click", function () {
     }
     if (checkName(markedCell[0], markedCell[1], x, y)) {
         // if valid name
-        drawLine(markedCell[0], markedCell[1], x, y)
+        drawLine("red", markedCell[0], markedCell[1], x, y)
         markedCell = null
         clearTableColor()
     } else {

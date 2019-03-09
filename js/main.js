@@ -1,9 +1,10 @@
 var tbSize = 15
 var table = [];
+var char2XY = {}
 
 var markedCell = null;
 var targetList = []
-var char2XY = {}
+var foundTargetList = []
 
 // ---- Utility Functions ----
 function cellIdStr(x, y) {
@@ -168,10 +169,9 @@ function checkName(x1, y1, x2, y2) {
     for (var i = 0; i < targetList.length; i++) {
         var ts = targetList[i].start
         var te = targetList[i].end
-        if (ts[0] == x1 && ts[1] == y1 && te[0] == x2 && te[1] == y2) {
-            return true
-        }
-        if (ts[0] == x2 && ts[1] == y2 && te[0] == x1 && te[1] == y1) {
+        if (ts[0] == x1 && ts[1] == y1 && te[0] == x2 && te[1] == y2 ||
+            ts[0] == x2 && ts[1] == y2 && te[0] == x1 && te[1] == y1) {
+            foundTargetList.push(targetList[i])
             return true
         }
     }

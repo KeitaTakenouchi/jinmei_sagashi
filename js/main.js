@@ -1,4 +1,6 @@
 var tbSize = 15
+var lineWidth = 3;
+
 var table = [];
 var char2XY = {}
 
@@ -80,34 +82,32 @@ function highlightLine(x1, y1, x2, y2) {
     } while (x < tbSize && y < tbSize); // just in case
 }
 
-var lw = 3;
-function lineCss(degree) {
+function lineCss(degree, width) {
     return function (color) {
         return "linear-gradient(" + degree + "deg, "
-            + "transparent " + (50 - lw) + "%,"
-            + color + " " + (50 - lw) + "%,"
-            + color + " " + (50 + lw) + "%,"
-            + "transparent " + (50 + lw) + "%)"
+            + "transparent " + (50 - width) + "%,"
+            + color + " " + (50 - width) + "%,"
+            + color + " " + (50 + width) + "%,"
+            + "transparent " + (50 + width) + "%)"
     }
 }
 
-function cornerCss(degree) {
+function cornerCss(degree, width) {
     return function (color) {
         return "linear-gradient(" + degree + "deg, "
-            + color + " " + lw + "%,"
-            + "transparent " + lw + "%) "
+            + color + " " + width + "%,"
+            + "transparent " + width + "%) "
     }
 }
 
-var hLine = lineCss(0)
-var vLine = lineCss(90)
-var rtLine = lineCss(45)
-var ltLine = lineCss(-45)
-
-var rtCorner = cornerCss(-135)
-var ltCorner = cornerCss(135)
-var rbCorner = cornerCss(-45)
-var lbCorner = cornerCss(45)
+var hLine = lineCss(0, lineWidth * 1.4)
+var vLine = lineCss(90, lineWidth * 1.4)
+var rtLine = lineCss(45, lineWidth)
+var ltLine = lineCss(-45, lineWidth)
+var rtCorner = cornerCss(-135, lineWidth)
+var ltCorner = cornerCss(135, lineWidth)
+var rbCorner = cornerCss(-45, lineWidth)
+var lbCorner = cornerCss(45, lineWidth)
 
 function drawLineInCell(color, x, y, dir) {
     var dx = dir[0]

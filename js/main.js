@@ -1,6 +1,7 @@
 var tbSize = 15
 var lineWidth = 3
 var targetNum = 10
+var timeoutSeconds = 100
 
 var table = []
 var char2XY = {}
@@ -319,7 +320,6 @@ function showTable() {
     $("#tb").append(tbHtml)
 }
 
-var remainingTime
 var isCountDwon = true
 var interval
 
@@ -329,7 +329,7 @@ function timeOver() {
 }
 
 function resetTimer() {
-    remainingTime = 3
+    var remainingTime = timeoutSeconds
     $("#timer").text(remainingTime)
     var decTime = function () {
         if (isCountDwon) {

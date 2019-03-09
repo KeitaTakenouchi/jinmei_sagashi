@@ -1,6 +1,6 @@
 var tbSize = 12
 var lineWidth = 2
-var targetNum = 10
+var targetNum = 15
 var timeoutSeconds = 100
 
 var table = []

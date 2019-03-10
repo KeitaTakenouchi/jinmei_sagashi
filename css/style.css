@@ -56,10 +56,6 @@
     display: none;
 }
 
-#popup.active{
-    display: block;
-}
-
 button{
     display:inline-block;
     vertical-align:middle;

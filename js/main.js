@@ -197,14 +197,14 @@ function showAnswerLines() {
 function showPopup(foundInfo) {
     isCountDown = false
     $("#table_div").addClass("inActive")
-    $("#popup").addClass("active")
+    $("#popup").fadeIn(200)
     $("#message").html(foundInfo.display_name + "さんは<br>" + foundInfo.message + "<br>生まれです")
 }
 
 function closePopup() {
     isCountDown = true
     $("#table_div").removeClass("inActive")
-    $("#popup").removeClass("active")
+    $("#popup").fadeOut(0)
 }
 
 // ---- Initialization ---- 

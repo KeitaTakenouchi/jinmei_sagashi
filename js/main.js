@@ -201,7 +201,8 @@ function showPopup(foundInfo) {
     isCountDown = false
     $("#table_div").addClass("inActive")
     $("#popup").fadeIn(200)
-    $("#message").html(foundInfo.display_name + "さんは<br>" + foundInfo.message + "<br>生まれです")
+    $("#message").html("<p>" + foundInfo.message + "生まれです．<br>改行テスト</p>"
+        + "<p align=\"right\">" + foundInfo.display_name + "<br>&nbsp;</p>")
 }
 
 function closePopup() {

@@ -8,7 +8,6 @@ var char2XY = {}
 
 var markedCell = null
 var targetList = []
-var foundTargetList = []
 var isCountDown = true
 
 // ---- Utility Functions ----
@@ -173,14 +172,19 @@ function drawLine(color, x1, y1, x2, y2) {
 function checkName(x1, y1, x2, y2) {
     if (!checkLine(x1, y1, x2, y2)) return null
 
+    var foundIndex = -1
     for (var i = 0; i < targetList.length; i++) {
         var ts = targetList[i].start
         var te = targetList[i].end
         if (ts[0] == x1 && ts[1] == y1 && te[0] == x2 && te[1] == y2 ||
             ts[0] == x2 && ts[1] == y2 && te[0] == x1 && te[1] == y1) {
-            foundTargetList.push(targetList[i])
-            return targetList[i]
+            foundIndex = i
+            break
         }
+    }
+    if (foundIndex >= 0) {
+        var foundInfo = targetList.splice(foundIndex, 1)[0]
+        return foundInfo
     }
     return null
 }
@@ -188,10 +192,9 @@ function checkName(x1, y1, x2, y2) {
 function showAnswerLines() {
     for (var i = 0; i < targetList.length; i++) {
         var t = targetList[i]
-        if (foundTargetList.indexOf(t) < 0) {
-            drawLine("green", t.start[0], t.start[1], t.end[0], t.end[1])
-        }
+        drawLine("green", t.start[0], t.start[1], t.end[0], t.end[1])
     }
+    targetList = []
 }
 
 function showPopup(foundInfo) {
@@ -232,7 +235,10 @@ function initTable() {
 }
 
 function chooseTargets() {
-    for (var i = 0; i < targetNum && jinmei.length > 0; i++) {
+    if (jinmei.length < targetNum) {
+        targetNum = jinmei.length
+    }
+    for (var i = 0; i < targetNum; i++) {
         var index = Math.round(Math.random() * (jinmei.length - 1))
         var target = jinmei.splice(index, 1)
         targetList.push(target[0])
@@ -374,7 +380,7 @@ function resetTimer() {
 }
 
 function showRemaining() {
-    var text = targetList.length - foundTargetList.length
+    var text = targetList.length
     $("#remaining").text(text)
 }
 

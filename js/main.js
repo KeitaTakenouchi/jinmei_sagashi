@@ -247,7 +247,17 @@ function chooseTargets() {
 }
 
 function randomDir() {
-    var dirs = [[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, -1], [-1, 1]]
+    var dirs = [
+        [0, 1],
+        [0, -1],
+        [1, 0],
+        //[-1, 0],
+        [1, 1],
+        [1, 1],
+        [1, -1],
+        //[-1, -1],
+        //[-1, 1]
+    ]
     var index = Math.round(Math.random() * (dirs.length - 1))
     return dirs[index]
 }
@@ -335,8 +345,8 @@ function fillRandomly() {
     for (var i = 0; i < tbSize; i++) {
         for (var j = 0; j < tbSize; j++) {
             if (!table[i][j]) {
-                //table[i][j] = randomHiragana()
-                table[i][j] = "."
+                table[i][j] = randomHiragana()
+                //table[i][j] = "."
                 // TODO: Check no new jinmei is created.
             }
         }

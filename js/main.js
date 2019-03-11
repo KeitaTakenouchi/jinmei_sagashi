@@ -429,7 +429,7 @@ $(".cell").on("click", function () {
     var foundInfo = checkName(markedCell[0], markedCell[1], x, y)
     if (foundInfo) {
         // if valid name
-        drawLine("red", markedCell[0], markedCell[1], x, y)
+        drawLine("tomato", markedCell[0], markedCell[1], x, y)
         showRemaining()
         markedCell = null
         clearTableColor()

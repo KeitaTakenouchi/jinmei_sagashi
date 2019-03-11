@@ -63,7 +63,7 @@
     text-align: center;
 }
 
-#close_popup_btn{
+button{
     display:inline-block;
     vertical-align:middle;
     border-radius:10px;
@@ -98,4 +98,9 @@
 #letter {
     box-shadow: 5px 5px grey;
     border: 1px solid grey;    
+}
+
+#try_again {
+    text-align: center;
+    display: none;
 }

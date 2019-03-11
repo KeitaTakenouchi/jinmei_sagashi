@@ -197,6 +197,14 @@ function showAnswerLines() {
     targetList = []
 }
 
+function showTryAgainButton() {
+    $("#try_again").fadeIn(100)
+}
+
+function hideTryAgainButton() {
+    $("#try_again").fadeOut(0)
+}
+
 function showPopup(foundInfo) {
     isCountDown = false
     $("#table_div").addClass("inActive")
@@ -210,8 +218,9 @@ function closePopup() {
     $("#table_div").removeClass("inActive")
     $("#popup").fadeOut(0)
     if (targetList.length == 0) {
-        isCountDown = false
+        clearInterval(interval)
         $("#cong").fadeIn(4000)
+        showTryAgainButton()
     }
 }
 
@@ -240,12 +249,13 @@ function initTable() {
 }
 
 function chooseTargets() {
-    if (jinmei.length < targetNum) {
-        targetNum = jinmei.length
+    var names = jinmei.slice()
+    if (names.length < targetNum) {
+        targetNum = names.length
     }
     for (var i = 0; i < targetNum; i++) {
-        var index = Math.round(Math.random() * (jinmei.length - 1))
-        var target = jinmei.splice(index, 1)
+        var index = Math.round(Math.random() * (names.length - 1))
+        var target = names.splice(index, 1)
         targetList.push(target[0])
     }
 }
@@ -375,6 +385,7 @@ var interval
 
 function timeOver() {
     showAnswerLines()
+    showTryAgainButton()
     clearInterval(interval)
 }
 
@@ -406,6 +417,7 @@ function init() {
 
     resetTimer()
     showRemaining()
+    hideTryAgainButton()
 }
 init()
 
@@ -460,4 +472,8 @@ $(".cell").mouseleave(function () {
 
 $("#close_popup_btn").on("click", function () {
     closePopup()
+})
+
+$("#try_again_btn").on("click", function () {
+    location.reload()
 })

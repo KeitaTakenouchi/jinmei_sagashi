@@ -30,6 +30,13 @@
     clear: both;
 }
 
+#cong {
+    font-size: 5em;
+    text-align: center;
+    color: tomato;
+    display: none;
+}
+
 #remaining_area{
     float: left;
     font-size: 20px;

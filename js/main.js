@@ -209,6 +209,10 @@ function closePopup() {
     isCountDown = true
     $("#table_div").removeClass("inActive")
     $("#popup").fadeOut(0)
+    if (targetList.length == 0) {
+        isCountDown = false
+        $("#cong").fadeIn(4000)
+    }
 }
 
 // ---- Initialization ---- 
